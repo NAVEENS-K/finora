@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import com.naveens.finora.common.enums.Currancy;
+import com.naveens.finora.common.enums.Currency;
 
 @Getter
 @Setter
@@ -31,5 +31,5 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Currancy currancy;
+    private Currency currency;
 }

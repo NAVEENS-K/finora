@@ -1,6 +1,6 @@
 package com.naveens.finora.common.enums;
 
-public enum Currancy {
+public enum Currency {
     INR,
     USD,
     EUR,
