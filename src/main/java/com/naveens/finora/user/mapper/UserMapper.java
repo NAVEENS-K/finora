@@ -1,6 +1,6 @@
 package com.naveens.finora.user.mapper;
 
-import com.naveens.finora.auth.dto.response.RegisterRequestDto;
+import com.naveens.finora.auth.dto.request.RegisterRequestDto;
 import com.naveens.finora.auth.dto.response.UserResponseDto;
 import com.naveens.finora.user.entity.User;
 import org.springframework.stereotype.Component;
