@@ -8,5 +8,6 @@ import java.util.List;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     boolean existsByUserIdAndName(Long userId, String name);
-    List<Category> findByUserId(Long UserId);
+    List<Category> findByUserIdOrderByNameAsc(Long UserId);
+    boolean existsByUserIdAndNameAndIdNot(Long userId, String name, Long id);
 }

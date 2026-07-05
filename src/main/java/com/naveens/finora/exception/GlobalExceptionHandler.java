@@ -52,4 +52,17 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.CONFLICT)
                 .body(response);
     }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleCategoryNotFoundException(CategoryNotFoundException e){
+        ApiResponse<Void> response =
+                ApiResponse.<Void>builder()
+                        .success(false)
+                        .message(e.getMessage())
+                        .errors(null)
+                        .build();
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(response);
+    }
 }
