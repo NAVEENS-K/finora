@@ -21,15 +21,13 @@ public class AuthService {
 
     public UserResponseDto register(RegisterRequestDto request){
         boolean emailExists = userRepository.existsByEmail(request.getEmail());
-        if(emailExists){
+        if(emailExists) {
             throw new EmailAlreadyExistsException("Email Already Exists.");
         }
-        else{
             User user = userMapper.toEntity(request);
 
             User savedUser = userRepository.save(user);
 
             return userMapper.toResponse(savedUser);
-        }
     }
 }

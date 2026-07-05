@@ -27,13 +27,13 @@ public class AuthController {
             @Valid
             @RequestBody RegisterRequestDto request)
     {
-            UserResponseDto user = authService.register(request);
+            UserResponseDto registeredUser = authService.register(request);
 
             ApiResponse<UserResponseDto> response =
                     ApiResponse.<UserResponseDto>builder()
                             .success(true)
                             .message("User registered Successfully.")
-                            .data(user)
+                            .data(registeredUser)
                             .build();
 
 
