@@ -65,4 +65,16 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .body(response);
     }
+    @ExceptionHandler(IncomeSourceAlreadyExistsException.class)
+    public ResponseEntity<ApiResponse<Void>> handleIncomeSourceNotFoundException(IncomeSourceAlreadyExistsException e){
+        ApiResponse<Void> response=
+                ApiResponse.<Void>builder()
+                        .success(false)
+                        .message(e.getMessage())
+                        .errors(null)
+                        .build();
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(response);
+    }
 }
