@@ -1,0 +1,13 @@
+package com.naveens.finora.income.repository;
+
+import com.naveens.finora.income.entity.Income;
+import com.naveens.finora.incomeSource.entity.IncomeSource;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface IncomeRepository extends JpaRepository<Income,Long> {
+
+}
