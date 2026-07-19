@@ -11,6 +11,8 @@ import com.naveens.finora.incomeSource.entity.IncomeSource;
 import com.naveens.finora.incomeSource.repository.IncomeSourceRepository;
 import com.naveens.finora.user.entity.User;
 import com.naveens.finora.user.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,5 +51,13 @@ public class IncomeService {
         Income savedIncome = incomeRepository.save(income);
 
         return incomeMapper.toResponse(savedIncome);
+    }
+
+    public Page<IncomeResponseDto> getAll(Pageable pageable){
+        User user = getCurrentUser();
+
+        Page<Income> incomes = incomeRepository.findByUserId(user.getId(), pageable);
+
+        return incomes.map(incomeMapper::toResponse);
     }
 }
