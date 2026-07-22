@@ -12,4 +12,5 @@ import java.util.Optional;
 @Repository
 public interface IncomeRepository extends JpaRepository<Income,Long> {
 Page<Income> findByUserId(Long userId, Pageable pageable);
+Optional<Income> findByIdAndUserId(Long id, Long userId);
 }

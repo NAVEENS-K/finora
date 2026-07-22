@@ -1,6 +1,7 @@
 package com.naveens.finora.income.service;
 
 
+import com.naveens.finora.exception.IncomeNotFoundException;
 import com.naveens.finora.exception.IncomeSourceNotFoundException;
 import com.naveens.finora.income.dto.request.CreateIncomeRequestDto;
 import com.naveens.finora.income.dto.response.IncomeResponseDto;
@@ -60,4 +61,16 @@ public class IncomeService {
 
         return incomes.map(incomeMapper::toResponse);
     }
+
+    public IncomeResponseDto getById(Long id){
+        User user = getCurrentUser();
+
+        Income income = incomeRepository
+                .findByIdAndUserId(id, user.getId())
+                .orElseThrow(()-> new IncomeNotFoundException("Income not found."));
+
+        return incomeMapper.toResponse(income);
+    }
+
+
 }

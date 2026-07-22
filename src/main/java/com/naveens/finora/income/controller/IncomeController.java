@@ -64,4 +64,20 @@ public class IncomeController {
                 .status(HttpStatus.OK)
                 .body(response);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<IncomeResponseDto>> getIncomeById(@PathVariable Long id){
+        IncomeResponseDto income = incomeService.getById(id);
+
+        ApiResponse<IncomeResponseDto> response =
+        ApiResponse.<IncomeResponseDto>builder()
+                .success(true)
+                .message("Income retrieved successfully.")
+                .data(income)
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(response);
+    }
 }
