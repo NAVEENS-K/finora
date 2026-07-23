@@ -32,7 +32,7 @@ public class IncomeController {
         ApiResponse<IncomeResponseDto> response =
                 ApiResponse.<IncomeResponseDto>builder()
                         .success(true)
-                        .message("income created successfully")
+                        .message("Income created successfully")
                         .data(income)
                         .build();
 
@@ -56,7 +56,7 @@ public class IncomeController {
         ApiResponse<Page<IncomeResponseDto>> response =
                 ApiResponse.<Page<IncomeResponseDto>>builder()
                         .success(true)
-                        .message("All incomes are retrieved")
+                        .message("Incomes are retrieved")
                         .data(incomes)
                         .build();
 
@@ -101,12 +101,13 @@ public class IncomeController {
     }
 
 @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> updateIncome(@PathVariable Long id){
+    public ResponseEntity<ApiResponse<Void>> deleteIncome(@PathVariable Long id){
         incomeService.deleteIncome(id);
 
         ApiResponse<Void> response =
                 ApiResponse.<Void>builder()
                         .success(true)
+                        .message("Income deleted successfully.")
                         .build();
 
         return ResponseEntity.ok(response);
