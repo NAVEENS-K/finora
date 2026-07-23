@@ -80,4 +80,35 @@ public class IncomeController {
                 .status(HttpStatus.OK)
                 .body(response);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<IncomeResponseDto>> updateIncome(
+            @PathVariable Long id,
+            @Valid @RequestBody CreateIncomeRequestDto request
+    ){
+        IncomeResponseDto income = incomeService.updateIncome(id,request);
+
+        ApiResponse<IncomeResponseDto> response =
+        ApiResponse.<IncomeResponseDto>builder()
+                .success(true)
+                .message("Income updated successfully.")
+                .data(income)
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(response);
+    }
+
+@DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> updateIncome(@PathVariable Long id){
+        incomeService.deleteIncome(id);
+
+        ApiResponse<Void> response =
+                ApiResponse.<Void>builder()
+                        .success(true)
+                        .build();
+
+        return ResponseEntity.ok(response);
+}
 }

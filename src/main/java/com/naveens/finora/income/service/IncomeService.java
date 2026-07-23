@@ -72,5 +72,35 @@ public class IncomeService {
         return incomeMapper.toResponse(income);
     }
 
+    @Transactional
+    public IncomeResponseDto updateIncome(Long id, CreateIncomeRequestDto request){
+        User user = getCurrentUser();
+
+        Income income = incomeRepository.findByIdAndUserId(id, user.getId())
+                .orElseThrow(()-> new IncomeNotFoundException("Income not found."));
+
+        IncomeSource incomeSource = incomeSourceRepository.findByIdAndUserId(request.getIncomeSourceId(), user.getId())
+                .orElseThrow(()-> new IncomeSourceNotFoundException("Income source not found."));
+
+        income.setIncomeSource(incomeSource);
+        income.setAmount(request.getAmount());
+        income.setReceivedDate(request.getReceivedDate());
+        income.setDescription(request.getDescription());
+
+        Income updatedIncome = incomeRepository.save(income);
+
+        return incomeMapper.toResponse(updatedIncome);
+    }
+
+    @Transactional
+public void deleteIncome(Long id){
+        User user = getCurrentUser();
+
+        Income income = incomeRepository.findByIdAndUserId(id, user.getId())
+                .orElseThrow(()-> new IncomeNotFoundException("Income Not found."));
+
+        incomeRepository.delete(income);
+
+}
 
 }
