@@ -28,7 +28,9 @@ public class Expense extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @NotNull
+    @Column(nullable = false, precision = 15, scale = 2)
+    @DecimalMin(value = "0", inclusive = false, message = "amount must be greater than 0.")
     private BigDecimal amount;
 
     @Column(length = 255)
