@@ -14,6 +14,8 @@ import com.naveens.finora.expense.repository.ExpenseRepository;
 import com.naveens.finora.user.entity.User;
 import com.naveens.finora.user.repository.UserRepository;
 import lombok.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -61,5 +63,14 @@ public class ExpenseService {
         Expense savedExpense = expenseRepository.save(expense);
 
         return expenseMapper.toResponse(savedExpense);
+    }
+
+    public Page<ExpenseResponseDto> getAllExpenses(Pageable pageable){
+        User user = getCurrentUser();
+
+        Page<Expense> expenses =
+                expenseRepository.findByUserId(user.getId(), pageable);
+
+        return expenses.map(expenseMapper::toResponse);
     }
 }
