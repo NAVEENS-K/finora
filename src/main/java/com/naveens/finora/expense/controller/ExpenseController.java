@@ -4,9 +4,7 @@ package com.naveens.finora.expense.controller;
 import com.naveens.finora.common.response.ApiResponse;
 import com.naveens.finora.expense.dto.request.CreateExpenseRequestDto;
 import com.naveens.finora.expense.dto.response.ExpenseResponseDto;
-import com.naveens.finora.expense.entity.Expense;
 import com.naveens.finora.expense.service.ExpenseService;
-import com.naveens.finora.income.dto.response.IncomeResponseDto;
 import jakarta.validation.Valid;
 import lombok.*;
 import org.springframework.data.domain.Page;
@@ -58,6 +56,52 @@ public class ExpenseController {
                 .success(true)
                 .message("Expenses are retrieved.")
                 .data(expenses)
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<ExpenseResponseDto>> getExpenseById(
+            @PathVariable Long id
+    ){
+        ExpenseResponseDto expense = expenseService.getExpenseById(id);
+
+        ApiResponse<ExpenseResponseDto> response =
+                ApiResponse.<ExpenseResponseDto>builder()
+                        .success(true)
+                        .message("Expense retrieved successfully")
+                        .data(expense)
+                        .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<ExpenseResponseDto>> updateExpense(
+            @PathVariable Long id,
+            @Valid @RequestBody CreateExpenseRequestDto request
+    ){
+        ExpenseResponseDto expense = expenseService.updateExpense(id, request);
+
+        ApiResponse<ExpenseResponseDto> response =
+        ApiResponse.<ExpenseResponseDto>builder()
+                .success(true)
+                .message("Expense updated successfully.")
+                .data(expense)
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteExpense(@PathVariable Long id){
+        expenseService.deleteExpense(id);
+
+        ApiResponse<Void> response=
+        ApiResponse.<Void>builder()
+                .success(true)
+                .message("Expense deleted successfully.")
                 .build();
 
         return ResponseEntity.ok(response);

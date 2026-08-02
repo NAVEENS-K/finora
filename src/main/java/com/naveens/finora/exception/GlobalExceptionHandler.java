@@ -106,4 +106,18 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .body(response);
     }
-}
+
+    @ExceptionHandler(ExpenseNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleExpenseNotFoundException(ExpenseNotFoundException e){
+        ApiResponse<Void> response=
+        ApiResponse.<Void>builder()
+                .success(false)
+                .message(e.getMessage())
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(response);
+
+    }
+ }

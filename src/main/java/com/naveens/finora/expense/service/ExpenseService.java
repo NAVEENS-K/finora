@@ -1,11 +1,10 @@
 package com.naveens.finora.expense.service;
 
 
-import com.naveens.finora.category.dto.request.CreateCategoryRequestDto;
 import com.naveens.finora.category.entity.Category;
 import com.naveens.finora.category.repository.CategoryRepository;
-import com.naveens.finora.category.service.CategoryService;
 import com.naveens.finora.exception.CategoryNotFoundException;
+import com.naveens.finora.exception.ExpenseNotFoundException;
 import com.naveens.finora.expense.dto.request.CreateExpenseRequestDto;
 import com.naveens.finora.expense.dto.response.ExpenseResponseDto;
 import com.naveens.finora.expense.entity.Expense;
@@ -72,5 +71,41 @@ public class ExpenseService {
                 expenseRepository.findByUserId(user.getId(), pageable);
 
         return expenses.map(expenseMapper::toResponse);
+    }
+
+    public ExpenseResponseDto getExpenseById(Long id){
+        User user = getCurrentUser();
+
+        Expense expense = expenseRepository
+                .findByIdAndUserId(id, user.getId())
+                .orElseThrow(()-> new ExpenseNotFoundException("Expense Not found."));
+
+        return expenseMapper.toResponse(expense);
+    }
+
+    public ExpenseResponseDto updateExpense(Long id, CreateExpenseRequestDto request){
+        User user = getCurrentUser();
+
+        Expense expense = expenseRepository.findByIdAndUserId(id, user.getId())
+                .orElseThrow(()-> new ExpenseNotFoundException("Expense not found."));
+        Category category = resolveCategory(user, request.getCategoryId());
+
+        expense.setExpenseDate(request.getExpenseDate());
+        expense.setAmount(request.getAmount());
+        expense.setDescription(request.getDescription());
+        expense.setCategory(category);
+
+        Expense updatedExpense = expenseRepository.save(expense);
+
+        return expenseMapper.toResponse(updatedExpense);
+    }
+
+    public void deleteExpense(Long id){
+        User user = getCurrentUser();
+
+        Expense expense = expenseRepository.findByIdAndUserId(id, user.getId())
+                .orElseThrow(()-> new ExpenseNotFoundException("Expense not found."));
+
+        expenseRepository.delete(expense);
     }
 }

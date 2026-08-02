@@ -5,21 +5,16 @@ import com.naveens.finora.common.entity.BaseEntity;
 import com.naveens.finora.user.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "expenses")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 public class Expense extends BaseEntity {
