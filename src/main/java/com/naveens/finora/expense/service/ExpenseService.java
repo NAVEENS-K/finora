@@ -18,9 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-@Getter
-@Setter
-//@AllArgsConstructor
 @RequiredArgsConstructor
 public class ExpenseService {
     private final ExpenseRepository expenseRepository;
@@ -34,7 +31,7 @@ public class ExpenseService {
                 .orElseThrow(()-> new RuntimeException("User not found."));
     }
 
-    public Category resolveCategory(User user, Long categoryId){
+    private Category resolveCategory(User user, Long categoryId){
         if(categoryId!=null){
             return categoryRepository.findByIdAndUserId(categoryId, user.getId())
                     .orElseThrow(()-> new CategoryNotFoundException("Category not found."));
