@@ -120,4 +120,16 @@ public class GlobalExceptionHandler {
                 .body(response);
 
     }
+
+    @ExceptionHandler(BudgetAlreadyExistsException.class)
+    public ResponseEntity<ApiResponse<Void>> handleBudgetAlreadyExistsException(Exception e){
+        ApiResponse<Void> response =
+                ApiResponse.<Void>builder()
+                        .success(false)
+                        .message(e.getMessage())
+                        .build();
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(response);
+    }
  }
