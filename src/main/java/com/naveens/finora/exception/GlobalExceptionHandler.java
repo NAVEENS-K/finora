@@ -132,4 +132,17 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.CONFLICT)
                 .body(response);
     }
+
+    @ExceptionHandler(BudgetNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleBudgetNotFoundException(Exception e){
+        ApiResponse<Void> response =
+        ApiResponse.<Void>builder()
+                .success(false)
+                .message(e.getMessage())
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(response);
+    }
  }
