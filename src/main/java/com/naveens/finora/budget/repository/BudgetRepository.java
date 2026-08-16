@@ -27,6 +27,8 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
             @Param("year") Integer year
     );
 
+    Optional<Budget> findByUserIdAndCategoryIdAndMonthAndYear(Long userId, Long categoryId, Integer month, Integer year);
+
     Page<Budget> findByUserId(Long userId, Pageable pageable);
 
     Optional<Budget> findByIdAndUserId(Long id, Long userId);

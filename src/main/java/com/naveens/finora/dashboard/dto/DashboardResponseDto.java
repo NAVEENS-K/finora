@@ -1,9 +1,11 @@
 package com.naveens.finora.dashboard.dto;
 
 
+import com.naveens.finora.category.dto.response.CategoryResponseDto;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Setter
 @Getter
@@ -23,5 +25,7 @@ public class DashboardResponseDto {
     private BigDecimal totalBudget;
     private BigDecimal totalBudgetSpent;
     private BigDecimal remainingBudget;
+
+    private List<CategoryExpenseResponseDto> categoryExpenses;
 
 }

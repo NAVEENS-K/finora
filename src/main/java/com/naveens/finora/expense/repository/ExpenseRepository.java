@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -27,6 +28,20 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
             @Param("startDate")LocalDate startDate,
             @Param("endDate") LocalDate endDate
             );
+
+    @Query("""
+            SELECT e.category.id, e.category.name, COALESCE(SUM(e.amount), 0)
+            FROM Expense e
+            WHERE e.user.id = :userId
+            AND e.expenseDate >= :startDate
+            AND e.expenseDate <= :endDate
+            GROUP BY e.category.id, e.category.name
+            """)
+    List<Object[]> getCategoryExpenseSummary(
+            @Param("userId") Long userId,
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate
+    );
 
     Page<Expense> findByUserId(Long userId ,Pageable pageable);
 
