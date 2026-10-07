@@ -1,5 +1,6 @@
 package com.naveens.finora.incomeSource.service;
 
+import com.naveens.finora.auth.service.CurrentUserService;
 import com.naveens.finora.exception.IncomeSourceAlreadyExistsException;
 import com.naveens.finora.exception.IncomeSourceNotFoundException;
 import com.naveens.finora.incomeSource.dto.request.CreateIncomeSourceRequestDto;
@@ -8,7 +9,6 @@ import com.naveens.finora.incomeSource.entity.IncomeSource;
 import com.naveens.finora.incomeSource.mapper.IncomeSourceMapper;
 import com.naveens.finora.incomeSource.repository.IncomeSourceRepository;
 import com.naveens.finora.user.entity.User;
-import com.naveens.finora.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,18 +17,17 @@ import java.util.List;
 public class IncomeSourceService {
     private final IncomeSourceRepository incomeSourceRepository;
     private final IncomeSourceMapper incomeSourceMapper;
-    private final UserRepository userRepository;
+    private final CurrentUserService currentUserService;
 
-    public IncomeSourceService(IncomeSourceRepository incomeSourceRepository, IncomeSourceMapper incomeSourceMapper, UserRepository userRepository){
+    public IncomeSourceService(IncomeSourceRepository incomeSourceRepository, IncomeSourceMapper incomeSourceMapper, CurrentUserService currentUserService){
 
         this.incomeSourceRepository = incomeSourceRepository;
         this.incomeSourceMapper = incomeSourceMapper;
-        this.userRepository = userRepository;
+        this.currentUserService = currentUserService;
     }
 
     private User getCurrentUser(){
-        return userRepository.findById(1L)
-                .orElseThrow();
+        return currentUserService.getCurrectUser();
     }
 
     public IncomeSourceResponseDto create(CreateIncomeSourceRequestDto request){

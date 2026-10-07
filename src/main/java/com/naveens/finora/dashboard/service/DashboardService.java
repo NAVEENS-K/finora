@@ -1,5 +1,6 @@
 package com.naveens.finora.dashboard.service;
 
+import com.naveens.finora.auth.service.CurrentUserService;
 import com.naveens.finora.budget.entity.Budget;
 import com.naveens.finora.budget.repository.BudgetRepository;
 import com.naveens.finora.dashboard.dto.CategoryExpenseResponseDto;
@@ -26,10 +27,10 @@ public class DashboardService {
     private final IncomeRepository incomeRepository;
     private final BudgetRepository budgetRepository;
     private final ExpenseRepository expenseRepository;
+    private final CurrentUserService currentUserService;
 
     private User getCurrentUser(){
-        return userRepository.findById(1L)
-                .orElseThrow(()-> new RuntimeException("User not found."));
+        return currentUserService.getCurrectUser();
     }
 
     private List<CategoryExpenseResponseDto> getCategoryExpenseSummary(

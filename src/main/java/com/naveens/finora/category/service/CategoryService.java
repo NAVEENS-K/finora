@@ -1,5 +1,6 @@
 package com.naveens.finora.category.service;
 
+import com.naveens.finora.auth.service.CurrentUserService;
 import com.naveens.finora.category.dto.request.CreateCategoryRequestDto;
 import com.naveens.finora.category.dto.response.CategoryResponseDto;
 import com.naveens.finora.category.entity.Category;
@@ -18,19 +19,20 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     private final CategoryMapper categoryMapper;
-
+    private final CurrentUserService currentUserService;
     private final UserRepository userRepository;
 
-    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper, UserRepository userRepository){
+    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper, UserRepository userRepository, CurrentUserService currentUserService){
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
         this.userRepository = userRepository;
+        this.currentUserService = currentUserService;
+
 
     }
 
     private User getCurrentUser(){
-        return userRepository.findById(1L)
-                .orElseThrow();
+        return currentUserService.getCurrectUser();
     }
 
     public CategoryResponseDto create(CreateCategoryRequestDto request){

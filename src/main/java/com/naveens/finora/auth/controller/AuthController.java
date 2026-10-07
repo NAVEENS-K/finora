@@ -1,6 +1,8 @@
 package com.naveens.finora.auth.controller;
 
+import com.naveens.finora.auth.dto.request.LoginRequestDto;
 import com.naveens.finora.auth.dto.request.RegisterRequestDto;
+import com.naveens.finora.auth.dto.response.LoginResponseDto;
 import com.naveens.finora.auth.dto.response.UserResponseDto;
 import com.naveens.finora.auth.service.AuthService;
 import com.naveens.finora.common.response.ApiResponse;
@@ -40,5 +42,21 @@ public class AuthController {
                     return ResponseEntity
                             .status(HttpStatus.CREATED)
                             .body(response);
+    }
+@PostMapping("/login")
+    public ResponseEntity<ApiResponse<LoginResponseDto>> login(
+            @Valid @ RequestBody LoginRequestDto request
+            ){
+        LoginResponseDto loggedInUser =
+                authService.login(request);
+
+        ApiResponse<LoginResponseDto> response =
+                ApiResponse.<LoginResponseDto>builder()
+                        .success(true)
+                        .message("Login sucessful.")
+                        .data(loggedInUser)
+                        .build();
+
+        return ResponseEntity.ok(response);
     }
 }

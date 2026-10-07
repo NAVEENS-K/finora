@@ -1,6 +1,7 @@
 package com.naveens.finora.expense.service;
 
 
+import com.naveens.finora.auth.service.CurrentUserService;
 import com.naveens.finora.category.entity.Category;
 import com.naveens.finora.category.repository.CategoryRepository;
 import com.naveens.finora.exception.CategoryNotFoundException;
@@ -24,11 +25,10 @@ public class ExpenseService {
     private final ExpenseMapper expenseMapper;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
-
+    private final CurrentUserService currentUserService;
 
     private User getCurrentUser(){
-        return userRepository.findById(1L)
-                .orElseThrow(()-> new RuntimeException("User not found."));
+        return currentUserService.getCurrectUser();
     }
 
     private Category resolveCategory(User user, Long categoryId){

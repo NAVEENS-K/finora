@@ -1,6 +1,7 @@
 package com.naveens.finora.income.service;
 
 
+import com.naveens.finora.auth.service.CurrentUserService;
 import com.naveens.finora.exception.IncomeNotFoundException;
 import com.naveens.finora.exception.IncomeSourceNotFoundException;
 import com.naveens.finora.income.dto.request.CreateIncomeRequestDto;
@@ -11,7 +12,6 @@ import com.naveens.finora.income.repository.IncomeRepository;
 import com.naveens.finora.incomeSource.entity.IncomeSource;
 import com.naveens.finora.incomeSource.repository.IncomeSourceRepository;
 import com.naveens.finora.user.entity.User;
-import com.naveens.finora.user.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,19 +21,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class IncomeService {
     private final IncomeRepository incomeRepository;
     private final IncomeMapper incomeMapper;
-    private final UserRepository userRepository;
     private final IncomeSourceRepository incomeSourceRepository;
-
-    public IncomeService(IncomeSourceRepository incomeSourceRepository, IncomeRepository incomeRepository, UserRepository userRepository, IncomeMapper incomeMapper){
+    private final CurrentUserService currentUserService;
+    public IncomeService(IncomeSourceRepository incomeSourceRepository, IncomeRepository incomeRepository, IncomeMapper incomeMapper, CurrentUserService currentUserService){
         this.incomeMapper = incomeMapper;
         this.incomeRepository = incomeRepository;
         this.incomeSourceRepository = incomeSourceRepository;
-        this.userRepository = userRepository;
+        this.currentUserService = currentUserService;
     }
 
     private User getCurrentUser(){
-        return userRepository.findById(1L)
-                .orElseThrow();
+        return currentUserService.getCurrectUser();
     }
 
     @Transactional

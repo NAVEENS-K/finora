@@ -1,6 +1,7 @@
 package com.naveens.finora.budget.service;
 
 
+import com.naveens.finora.auth.service.CurrentUserService;
 import com.naveens.finora.budget.dto.request.CreateBudgetRequestDto;
 import com.naveens.finora.budget.dto.response.BudgetResponseDto;
 import com.naveens.finora.budget.entity.Budget;
@@ -26,10 +27,10 @@ public class BudgetService {
     private final BudgetRepository budgetRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+    private final CurrentUserService currentUserService;
 
     private User getCurrentUser(){
-        return userRepository.findById(1L)
-                .orElseThrow(()-> new RuntimeException("User not found."));
+        return currentUserService.getCurrectUser();
     }
 
     public BudgetResponseDto createBudget(CreateBudgetRequestDto request){
